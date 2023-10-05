@@ -1,4 +1,4 @@
-const input = "777" // dev input
+const input = "8" // dev input
 
 function* lexer(str) {
     let i = 0;
@@ -15,12 +15,20 @@ function* lexer(str) {
             }
         }
 
-        return {
-            type: "number",
-            value,
-        };
+        if (value.length > 1) {
+            return {
+                type: "number",
+                value,
+            }
+        }
+
+        return null;
     }
     
+    const eof = () => {
+        char = str[i]; // time of video 1:06:10
+    }
+
     for (; i < str.length;) {
         const token = number();
 
