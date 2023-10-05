@@ -7,6 +7,7 @@ function* lexer(str) {
     const number = () => {
         let value = ""
         for (; i < str.length; i++) {
+            char = str[i]
             if (char === "7") {
                 value += char;
             } else {
