@@ -22,14 +22,14 @@ function* lexer(str) {
     
     for (; i < str.length;) {
         const token = number();
-        
-        if (char === "7") {
-            yield number();
-        } else if (char === undefined) {
+
+        if (token) {
+            yield token;
+        } /*else if (char === undefined) {
             yield {
                 type: "EOF"
             }
-        } else {
+        }*/ else {
             throw new SyntaxError(`Unexpected character "${char}" at ${i + 1}`) // throw custom error later
         }
     }
