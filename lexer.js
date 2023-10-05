@@ -1,24 +1,30 @@
-const input = "d7" // dev input
-
-function trace(name, v) {
-    console.log(name);
-    return v;
-}
+const input = "777" // dev input
 
 function* lexer(str) {
-    for (let i = 0; i < str.length; i++) {
-        const char = str[i];
+    let i = 0;
+    let char = undefined;
 
-
-        if (trace("checking 7", char === "7")) {
-            yield {
-                type: "number",
-                value: "7",
-                //loc: {
-                  //  begin: i,
-                    //end: i + 1
-                //}
+    const number = () => {
+        let value = ""
+        for (; i < str.length; i++) {
+            if (char === "7") {
+                value += char;
+            } else {
+                break
             }
+        }
+
+        return {
+            type: "number",
+            value,
+        };
+    }
+    
+    for (; i < str.length;) {
+        const token = number();
+        
+        if (char === "7") {
+            yield number();
         } else if (char === undefined) {
             yield {
                 type: "EOF"
