@@ -1,4 +1,4 @@
-const input = "8" // dev input
+const input = "777" // dev input
 
 function* lexer(str) {
     let i = 0;
@@ -15,7 +15,7 @@ function* lexer(str) {
             }
         }
 
-        if (value.length > 1) {
+        if (value.length >= 1) {
             return {
                 type: "number",
                 value,
@@ -25,20 +25,23 @@ function* lexer(str) {
         return null;
     }
     
-    const eof = () => {
+    function eof() {
         char = str[i]; // time of video 1:06:10
+        if (char == undefined) {
+            i++;
+            return {
+                type: "EOF"
+            };
+        }
+        
     }
 
-    for (; i < str.length;) {
-        const token = number();
+    for (; i <= str.length;) {
+        const token = number() || eof();
 
         if (token) {
             yield token;
-        } /*else if (char === undefined) {
-            yield {
-                type: "EOF"
-            }
-        }*/ else {
+        } else {
             throw new SyntaxError(`Unexpected character "${char}" at ${i + 1}`) // throw custom error later
         }
     }
