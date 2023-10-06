@@ -26,7 +26,7 @@ function* lexer(str) {
     }
     
     function eof() {
-        char = str[i]; // time of video 1:06:10
+        char = str[i]; // time of video 1:08:16
         if (char == undefined) {
             i++;
             return {
