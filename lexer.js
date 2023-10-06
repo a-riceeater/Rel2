@@ -6,7 +6,7 @@ function* lexer(str) {
 
     const number = () => {
         let value = ""
-        for (; i < str.length; i++) {
+        for (; i <= str.length; i++) {
             char = str[i]
             if (char === "7") {
                 value += char;
@@ -37,7 +37,7 @@ function* lexer(str) {
     }
 
     for (; i <= str.length;) {
-        const token = number() || eof();
+        const token = number() || eof() || null;
 
         if (token) {
             yield token;
