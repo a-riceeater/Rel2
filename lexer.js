@@ -37,7 +37,7 @@ function* lexer(str) {
     }
 
     for (; i <= str.length;) {
-        const token = number() || eof() || null;
+        const token = number() || eof() || null; // if not a number, or eof, then undefined character
 
         if (token) {
             yield token;
