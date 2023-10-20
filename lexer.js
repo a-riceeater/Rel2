@@ -1,4 +1,4 @@
-const input = "777" // dev input
+const input = "777" // dev input, add fs.readFile later
 
 function* lexer(str) {
     let i = 0;
@@ -47,4 +47,4 @@ function* lexer(str) {
     }
 }
 
-console.log([...lexer(input)]);
+console.log(JSON.stringify([...lexer(input)]));
