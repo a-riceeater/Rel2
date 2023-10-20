@@ -1,17 +1,20 @@
-const input = "777" // dev input, add fs.readFile later
+const input = `1234567890 7           77` // dev input, add fs.readFile later
 
 function* lexer(str) {
+    let line = 0;
+    let column = 0;
     let i = 0;
     let char = str[i];
 
     function next() {
         i++;
         char = str[i];
+        column++;
     }
 
     const number = () => {
         let buffer = "";
-        while (char === "7") {
+        while (/^[0-9]$/.test(char)) {
             buffer += char;
             next()
         }
@@ -19,9 +22,11 @@ function* lexer(str) {
         if (buffer.length >= 1) {
             return {
                 type: "number",
-                value: buffer
+                value: Number(buffer)
             }
         }
+
+        return null;
     }
     
     const eof = () => {
@@ -29,15 +34,38 @@ function* lexer(str) {
         if (char == undefined) {
             i++;
             return { type: "EOF" };
-
         }
         
+        return null;
+    }
+
+    const eol = () => {
+        char = str[i]; // time of video 1:08:16
+        if (char == "\n") {
+            i++;
+            return { type: "EOF" };
+        }
+        
+        return null;
+    }
+
+    const whitespace = () => {
+        while (char === " " || char === "\t") {
+            next();
+        }
+
+        while (char === " " || char === "\t") {
+            next();
+        }
     }
 
     for (;;) {
-        const token = number() || eof() || null; // if not a number, or eof, then undefined character
+        whitespace();
+        const token = number() || eol() || eof() || null; // if not a number, or eof, then undefined character
 
         if (token) {
+            if (token.type == "whitespace") continue
+
             yield token;
 
             if (token.type === "EOF") break;
@@ -47,4 +75,4 @@ function* lexer(str) {
     }
 }
 
-console.log(JSON.stringify([...lexer(input)]));
+console.log([...lexer(input)]);
